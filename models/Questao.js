@@ -1,11 +1,12 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose       = require("mongoose");
+const { Schema }     = mongoose;
 
 const SCHEMA = new mongoose.Schema
 ({
-  enunciado: String,
-  tipoSimulado: { type: Schema.Types.ObjectId, ref: 'TipoSimulado' },
-  gabarito: String,
+  _id: mongoose.Types.ObjectId,
+  enunciado: { type: String, required: true },
+  tipoSimulado: { type: Schema.Types.ObjectId, ref: 'TipoSimulado', required: true },
+  gabarito: { type: String, required: true },
   respostas: [{ type: Schema.Types.ObjectId, ref: 'Resposta' }]
 },
 { timestamps: true, versionKey: false });

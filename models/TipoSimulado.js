@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const SCHEMA = new mongoose.Schema
 ({
-  id: Number,
-  descricao: String,
-  rgbFonte: String,
-  rgbFundo: String,
-  iniciais: String
+  _id: { type: mongoose.Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+  descricao: { type: String, required: true },
+  rgbFonte: { type: String, required: true },
+  rgbFundo: { type: String, required: true },
+  iniciais: { type: String, required: true }
 },
 { timestamps: true, versionKey: false });
 

@@ -1,3 +1,4 @@
+
 const express          = require('express');
 const router           = express.Router();
 const Questao          = require('../models/Questao');
@@ -35,16 +36,16 @@ router.get('/:id', async (req, res) =>
 });
 
 // POST
-router.post('/', async (req, res) => 
+router.post('/', async (req, res) =>
 {
     const registro = new Questao(req.body);
     try
     {
-        registro._id = new Types.ObjectId;
-        for (let i = 0; i < registro.respostas.length; i++)
+        //registro._id = "60d5f6c49d1b2c001cfed2b9";
+        /*for (let i = 0; i < registro.respostas.length; i++)
         {
             registro.respostas[i].idQuestao = registro._id;
-        }
+        }*/
         const novo = await registro.save();
         //mongoose.connection.close(); // Fechando a conexão após salvar
         res.status(201).json({ message: mensagemSucess, register: novo });
