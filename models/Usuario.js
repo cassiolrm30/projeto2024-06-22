@@ -9,4 +9,4 @@ const SCHEMA = new mongoose.Schema
 },
 { timestamps: true, versionKey: false });
 
-module.exports = mongoose.model('Usuario', SCHEMA);
+module.exports = mongoose.model('Usuarios', SCHEMA);

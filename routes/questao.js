@@ -1,7 +1,10 @@
 
 const express          = require('express');
 const router           = express.Router();
+const TipoSimulado     = require('../models/TipoSimulado');
 const Questao          = require('../models/Questao');
+const Resposta         = require('../models/Resposta');
+const mongoose         = require('mongoose');
 const mensagemNotFound = "Registro não encontrado.";
 const mensagemSucess   = "Dados salvos com sucesso.";
 
@@ -38,20 +41,33 @@ router.get('/:id', async (req, res) =>
 // POST
 router.post('/', async (req, res) =>
 {
-    const registro = new Questao(req.body);
     try
     {
-        //registro._id = "60d5f6c49d1b2c001cfed2b9";
-        /*for (let i = 0; i < registro.respostas.length; i++)
+        let registro = new Questao();
+        //const registro = await Questao.findById(req.params.id);
+        registro = req.body.enunciado;
+        registro = req.body.gabarito;
+        registro = req.body.tipoSimulado = new TipoSimulado({ "_id": "99999999-9999-1999-a999-999999999999", "rgbFonte": "#00BDD1", "rgbFundo": "#E0FFFF", "iniciais": "I.S.", "descricao": "Interoperabilidade de Sistemas" });
+        registro.respostas = [];
+        let chr    = 65;
+        for (let i = 0; i < req.body.opcoes_resposta.length; i++)
         {
-            registro.respostas[i].idQuestao = registro._id;
-        }*/
-        const novo = await registro.save();
-        //mongoose.connection.close(); // Fechando a conexão após salvar
-        res.status(201).json({ message: mensagemSucess, register: novo });
+            const opcao = String.fromCharCode(chr + i);
+            let resposta = new Resposta();
+            resposta.idQuestao = registro._id;
+            resposta.opcao = opcao;
+            resposta.descricao = req.body.opcoes_resposta[i];
+            registro.respostas.push(resposta);
+        } 
+        req.body.respostas = registro.respostas;
+        console.log(req.body);
+        registro = await Questao.create(req.body);
+        mongoose.connection.close(); // Fechando a conexão após salvar
+        res.status(201).json({ message: mensagemSucess, register: registro });
     }
     catch (err)
     {
+        console.log(err);
         res.status(400).json({ message: err.message });
     }
 });
