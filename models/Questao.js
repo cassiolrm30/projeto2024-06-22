@@ -3,11 +3,12 @@ const mongoose   = require("mongoose");
 
 const SCHEMA = new mongoose.Schema
 ({
-  //_id: mongoose.Types.ObjectId,
-  enunciado: { type: String, required: true },
+  _id: { type: mongoose.Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+  //_id:          { type: Number, required: true },
+  enunciado:    { type: String, required: true },
   tipoSimulado: { type: Object, required: true },
-  gabarito: { type: String, required: true },
-  respostas: [{ type: Object, ref: 'Resposta' }]
+  gabarito:     { type: String, required: true },
+  respostas:    [{ type: Object, ref: 'Resposta' }]
 },
 { timestamps: true, versionKey: false });
 
