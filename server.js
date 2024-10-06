@@ -40,6 +40,7 @@ connection.end();
 app.use('/usuarios', usuarioRouter);
 app.use('/tiposSimulado', tipoSimuladoRouter);
 app.use('/questoes', questaoRouter);
+app.use('/questoes/?getByTipoSimulado/:tipoSimuladoId', questaoRouter);
 app.use('/respostas', respostaRouter);
 
 /*
